@@ -1,0 +1,19 @@
+{
+  "name": "cryptopals-challenges",
+  "version": "1.0.0",
+  "description": "My solutions to the cryptopals crypto challenges.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node --experimental-modules index.mjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/luczsoma/cryptopals-challenges.git"
+  },
+  "author": "Soma Lucz",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/luczsoma/cryptopals-challenges/issues"
+  },
+  "homepage": "https://github.com/luczsoma/cryptopals-challenges#readme"
+}
