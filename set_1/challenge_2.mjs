@@ -1,3 +1,16 @@
+export function equalLengthBufferXor(buffer1, buffer2) {
+  if (buffer1.length !== buffer2.length) {
+    throw new Error("inputs are not of same size");
+  }
+
+  const result = Buffer.alloc(buffer1.length);
+  for (let i = 0; i < buffer1.length; i++) {
+    result[i] = buffer1[i] ^ buffer2[i];
+  }
+
+  return result;
+}
+
 export function equalLengthHexXor(hex1, hex2) {
   const evenPaddedHex1 = hex1.length % 2 === 0 ? hex1 : `0${hex1}`;
   const evenPaddedHex2 = hex2.length % 2 === 0 ? hex2 : `0${hex2}`;
@@ -9,11 +22,7 @@ export function equalLengthHexXor(hex1, hex2) {
   const buffer1 = Buffer.from(evenPaddedHex1, "hex");
   const buffer2 = Buffer.from(evenPaddedHex2, "hex");
 
-  const result = Buffer.alloc(buffer1.length);
-  for (let i = 0; i < buffer1.length; i++) {
-    result[i] = buffer1[i] ^ buffer2[i];
-  }
-  return result.toString("hex");
+  return equalLengthBufferXor(buffer1, buffer2).toString("hex");
 }
 
 export function challenge_2() {
