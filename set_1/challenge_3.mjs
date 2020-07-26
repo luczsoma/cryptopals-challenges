@@ -1,41 +1,68 @@
 import { equalLengthBufferXor } from "./challenge_2";
 
+export function findByHighestFrequency(
+  messageCandidates,
+  messageCharactersAlphabet,
+  findThisManyHighest
+) {
+  let messageCandidatesByScore = new Map();
+
+  for (const messageCandidate of messageCandidates) {
+    const goodCharacters = messageCandidate
+      .split("")
+      .map((c) => messageCharactersAlphabet.includes(c))
+      .reduce((acc, curr) => acc + curr, 0);
+    messageCandidatesByScore.has(goodCharacters)
+      ? messageCandidatesByScore.get(goodCharacters).push(messageCandidate)
+      : messageCandidatesByScore.set(goodCharacters, [messageCandidate]);
+  }
+
+  messageCandidatesByScore = new Map(
+    [...messageCandidatesByScore.entries()].sort(
+      ([keyA], [keyB]) => keyB - keyA
+    )
+  );
+
+  return Array.from(messageCandidatesByScore.values())
+    .slice(0, findThisManyHighest)
+    .flat();
+}
+
+export function singleCharacterXor(
+  sourceHex,
+  keyAlphabet,
+  messageCharactersAlphabet,
+  treshold
+) {
+  const sourceBuffer = Buffer.from(sourceHex, "hex");
+
+  const messageCandidates = [];
+  for (const keyCandidate of keyAlphabet) {
+    const key = Buffer.alloc(sourceBuffer.length, keyCandidate);
+    messageCandidates.push(equalLengthBufferXor(sourceBuffer, key).toString());
+  }
+
+  return findByHighestFrequency(
+    messageCandidates,
+    messageCharactersAlphabet,
+    treshold
+  );
+}
+
 export function challenge_3() {
   const sourceHex =
     "1b37373331363f78151b7f2b783431333d78397828372d363c78373e783a393b3736";
-  const sourceBuffer = Buffer.from(sourceHex, "hex");
-
-  const keyCandidates = [];
-
-  // A-Z
-  for (let i = 65; i <= 90; i++) {
-    keyCandidates.push(String.fromCharCode(i));
-  }
-
-  // a-z
-  for (let i = 97; i <= 122; i++) {
-    keyCandidates.push(String.fromCharCode(i));
-  }
-
-  const messageCandidates = new Map();
-
-  for (const keyCandidate of keyCandidates) {
-    const key = Buffer.alloc(sourceBuffer.length, keyCandidate);
-    const messageCandidate = equalLengthBufferXor(sourceBuffer, key).toString();
-    const numberOfLoneSpaces = (messageCandidate.match(/[^ ] [^ ]/g) || [])
-      .length;
-    messageCandidates.has(numberOfLoneSpaces)
-      ? messageCandidates.get(numberOfLoneSpaces).push(messageCandidate)
-      : messageCandidates.set(numberOfLoneSpaces, [messageCandidate]);
-  }
-
-  const bestCandidates = messageCandidates.get(
-    Math.max(...Array.from(messageCandidates.keys()))
+  const bestCandidates = singleCharacterXor(
+    sourceHex,
+    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ",
+    " abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ",
+    2
   );
-  if (bestCandidates.length !== 1) {
+
+  if (bestCandidates.length === 0) {
     return false;
   }
 
-  console.log(bestCandidates.pop());
+  console.log(bestCandidates);
   return true;
 }
