@@ -1,8 +1,8 @@
-import { challenge_1 } from "./set_1/challenge_1";
-import { challenge_2 } from "./set_1/challenge_2";
-import { challenge_3 } from "./set_1/challenge_3";
-import { challenge_4 } from "./set_1/challenge_4";
-import { challenge_5 } from "./set_1/challenge_5";
+import { challenge_1 } from "./set_1/challenge_1.mjs";
+import { challenge_2 } from "./set_1/challenge_2.mjs";
+import { challenge_3 } from "./set_1/challenge_3.mjs";
+import { challenge_4 } from "./set_1/challenge_4.mjs";
+import { challenge_5 } from "./set_1/challenge_5.mjs";
 
 function main() {
   console.log(`Set 1 / Challenge 1: ${challenge_1() ? "OK" : "error"}`);

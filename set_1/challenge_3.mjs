@@ -1,4 +1,4 @@
-import { equalLengthBufferXor } from "./challenge_2";
+import { equalLengthBufferXor } from "./challenge_2.mjs";
 
 export function findByHighestFrequency(
   messageCandidates,

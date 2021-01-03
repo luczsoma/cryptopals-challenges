@@ -1,5 +1,4 @@
-import { singleCharacterXor } from "./challenge_3";
-import { findByHighestFrequency } from "./challenge_3.mjs";
+import { findByHighestFrequency, singleCharacterXor } from "./challenge_3.mjs";
 
 export function challenge_4() {
   const sources = `0e3647e8592d35514a081243582536ed3de6734059001e3f535ce6271032
